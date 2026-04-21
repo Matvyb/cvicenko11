@@ -38,10 +38,43 @@ class StudentsGrades:
         else:
             return "F"
 
+    def find(self, points):
+        indexy_zaku = []
+        for i in range(len(self.scores)):  # kredit tonda
+            if self.scores[i] == points:
+                indexy_zaku.append(i)
+        return indexy_zaku
 
-results = StudentsGrades([85, 42, 91, 67, 50, 73, 100, 38, 58])
+    def get_sorted(self):
+        all_scores = self.scores.copy()
+        n = len(all_scores)
+        for i in range(n):
+            for j in range(0, n - i - 1):
+                if all_scores[j] > all_scores[j+1]:
+                    all_scores[j], all_scores[j +
+                                              1] = all_scores[j+1], all_scores[j]
+        return all_scores
 
-print(results.count())          # 9
-print(results.get_by_index(2))  # 91
-print(results.scores)           # [85, 42, 91, 67, 50, 73, 100, 38, 58]
-print(results.get_grades(4))
+
+def main():
+    results = StudentsGrades([85, 42, 91, 67, 50, 73, 100, 38, 58])
+
+    pocet = results.count()
+    print(f"Test psalo {pocet} žáků.")
+
+    for i in range(pocet):
+        body = results.scores[i]
+        znamka = results.get_grades(i)
+        print(f"Student {i}: {body} points – {znamka}")
+
+    print("Studenti s plným počtem bodů:")
+    plny_pocet = results.find(100)
+    print(plny_pocet)
+
+    print("Seřazené výsledky:")
+    serazene = results.get_sorted()
+    print(serazene)
+
+
+if __name__ == "__main__":
+    main()
